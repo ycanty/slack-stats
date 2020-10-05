@@ -22,8 +22,7 @@ import (
 	"log"
 	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
-	"github.com/slack-go/slack"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
@@ -87,13 +86,4 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		// fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
-}
-
-var __api *slack.Client
-
-func Api() *slack.Client {
-	if __api != nil {
-		return __api
-	}
-	return slack.New(viper.GetString("token"))
 }

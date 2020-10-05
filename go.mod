@@ -3,9 +3,13 @@ module github.com/ycanty/go-cli
 go 1.14
 
 require (
+	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/nwidger/jsoncolor v0.3.0
 	github.com/slack-go/slack v0.6.5
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.6.3
-	golang.org/x/sys v0.0.0-20200116001909-b77594299b42 // indirect
+	github.com/stretchr/testify v1.6.1 // indirect
+	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f // indirect
+	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 )

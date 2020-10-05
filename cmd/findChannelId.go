@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/spf13/cobra"
-	"strings"
+	"github.com/spf13/viper"
+	"github.com/ycanty/go-cli/console"
+	"github.com/ycanty/go-cli/slack"
 )
 
 func newFindChannelIDCommand() *cobra.Command {
@@ -14,32 +14,12 @@ func newFindChannelIDCommand() *cobra.Command {
 		Long:  ``,
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			channels, err := Api().GetChannels(true)
+			api := slack.NewApi(viper.GetString("token"))
+			channels, err := api.GetChannels(args[0])
 			if err != nil {
 				return err
 			}
-
-			type response struct {
-				Name string
-				ID   string
-			}
-
-			responses := make([]response, 0)
-			for _, channel := range channels {
-				if strings.Contains(channel.Name, args[0]) {
-					responses = append(responses, response{
-						Name: channel.Name,
-						ID:   channel.ID,
-					})
-				}
-			}
-			jsonBytes, err := json.Marshal(responses)
-
-			if err != nil {
-				return err
-			}
-			fmt.Println(string(jsonBytes))
-
+			_ = console.PrintJSON(channels)
 			return nil
 		},
 	}
