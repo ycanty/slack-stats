@@ -53,7 +53,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-cli.yaml)")
 	rootCmd.PersistentFlags().String("token", "xyz", "Slack authentication token")
 
-	if err := viper.BindPFlag("slack.token", rootCmd.PersistentFlags().Lookup("token")); err != nil {
+	if err := viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token")); err != nil {
 		log.Fatal(err)
 	}
 
@@ -95,5 +95,5 @@ func Api() *slack.Client {
 	if __api != nil {
 		return __api
 	}
-	return slack.New(viper.GetString("slack.token"))
+	return slack.New(viper.GetString("token"))
 }
