@@ -1,12 +1,10 @@
 package cmd
 
 import (
-	"encoding/json"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"github.com/ycanty/go-cli/console"
 	"github.com/ycanty/go-cli/slack"
-	"io/ioutil"
-	"os"
 )
 
 func newImportCommand() *cobra.Command {
@@ -15,24 +13,17 @@ func newImportCommand() *cobra.Command {
 		Short: "Import data into the statistics database",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			file, err := cmd.Flags().GetString("file")
+			fileHandle, err := GetFileFlag(cmd, "file")
 
 			if err != nil {
 				return err
 			}
 
-			fileHandle := os.Stdin
-			if file != "-" {
-				if fileHandle, err = os.Open(file); err != nil {
-					return err
-				}
-			}
-			var messages []slack.Message
-			data, err := ioutil.ReadAll(fileHandle)
+			api := slack.NewApi(viper.GetString("token"))
+
+			messages, err := api.ReadConversationHistory(fileHandle)
+
 			if err != nil {
-				return err
-			}
-			if err := json.Unmarshal(data, &messages); err != nil {
 				return err
 			}
 

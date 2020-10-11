@@ -1,8 +1,11 @@
 package slack
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/slack-go/slack"
+	"io"
+	"io/ioutil"
 	"strings"
 	"time"
 )
@@ -83,5 +86,18 @@ func (a *Api) GetConversationHistory(channelID string) ([]Message, error) {
 	}
 
 	// TODO Store to sqlite DB (https://gorm.io/docs/)
+	return messages, nil
+}
+
+func (a *Api) ReadConversationHistory(reader io.Reader) ([]Message, error) {
+	var messages []Message
+	data, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(data, &messages); err != nil {
+		return nil, err
+	}
+
 	return messages, nil
 }
