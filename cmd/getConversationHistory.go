@@ -21,7 +21,6 @@ func newGetConversationHistoryCommand() *cobra.Command {
 				return err
 			}
 			_ = console.PrintJSON(messages)
-			// TODO Store to sqlite DB (https://gorm.io/docs/)
 			return nil
 		},
 	}

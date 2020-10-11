@@ -58,6 +58,7 @@ func init() {
 
 	rootCmd.AddCommand(newFindChannelIDCommand())
 	rootCmd.AddCommand(newGetConversationHistoryCommand())
+	rootCmd.AddCommand(newImportCommand())
 }
 
 // initConfig reads in config file and ENV variables if set.
