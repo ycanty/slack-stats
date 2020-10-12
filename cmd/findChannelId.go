@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ycanty/go-cli/console"
+	"github.com/ycanty/go-cli/json"
 	"github.com/ycanty/go-cli/slack"
 )
 
@@ -19,7 +19,7 @@ func newFindChannelIDCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			_ = console.PrintJSON(channels)
+			_ = json.PrintJSON(channels)
 			return nil
 		},
 	}

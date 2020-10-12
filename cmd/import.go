@@ -2,10 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"github.com/ycanty/go-cli/console"
 	"github.com/ycanty/go-cli/db"
-	"github.com/ycanty/go-cli/slack"
+	"github.com/ycanty/go-cli/json"
 )
 
 func newImportCommand() *cobra.Command {
@@ -26,27 +24,25 @@ func newImportCommand() *cobra.Command {
 				return err
 			}
 
-			api := slack.NewApi(viper.GetString("token"))
-
-			messages, err := api.ReadConversationHistory(fileHandle)
+			messages, err := json.ReadConversationHistory(fileHandle)
 
 			if err != nil {
 				return err
 			}
 
-			if err := console.PrintJSON(messages); err != nil {
+			if err := json.PrintJSON(messages); err != nil {
 				return err
 			}
 
-			db, err := db.Open(dbFilename)
+			dbClient, err := db.Open(dbFilename)
 
 			if err != nil {
 				return err
 			}
 
-			db.Save(messages)
+			err = dbClient.Save(messages)
 
-			return nil
+			return err
 		},
 	}
 

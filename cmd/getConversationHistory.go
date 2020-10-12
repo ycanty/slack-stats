@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ycanty/go-cli/console"
+	"github.com/ycanty/go-cli/json"
 	"github.com/ycanty/go-cli/slack"
 	"log"
 )
@@ -20,7 +20,7 @@ func newGetConversationHistoryCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			_ = console.PrintJSON(messages)
+			_ = json.PrintJSON(messages)
 			return nil
 		},
 	}
