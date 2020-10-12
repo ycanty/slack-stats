@@ -85,7 +85,6 @@ func (a *Api) GetConversationHistory(channelID string) ([]Message, error) {
 		cursor = history.ResponseMetaData.NextCursor
 	}
 
-	// TODO Store to sqlite DB (https://gorm.io/docs/)
 	return messages, nil
 }
 
