@@ -49,7 +49,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-cli.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-stats.yaml)")
 	rootCmd.PersistentFlags().String("token", "xyz", "Slack authentication token")
 
 	if err := viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token")); err != nil {
@@ -75,12 +75,12 @@ func initConfig() {
 		}
 
 		// Search config in current dir, then home dir
-		viper.SetConfigName(".slack-cli")
+		viper.SetConfigName(".slack-stats")
 		viper.AddConfigPath(".")
 		viper.AddConfigPath(home)
 	}
 
-	viper.SetEnvPrefix("SLACK_CLI")
+	viper.SetEnvPrefix("SLACK_STATS")
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
