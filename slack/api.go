@@ -37,16 +37,16 @@ func (a *Api) GetChannels(name string) ([]Channel, error) {
 	return responses, nil
 }
 
-func (a *Api) GetConversationHistory(channelID string) ([]Message, error) {
+func (a *Api) GetConversationHistory(channel Channel) (*ConversationHistory, error) {
 	messages := make([]Message, 0)
 	cursor := ""
 	// TODO Get the start date from a param
-	thetime := time.Now().AddDate(0, 0, -3).Unix() // since 3 days ago
+	thetime := time.Now().AddDate(0, 0, -7).Unix() // since 7 days ago
 	oldest := fmt.Sprintf("%d", thetime)
 	//fmt.Fprintf(os.Stdout, "Epoch: %s\n", time.Unix(thetime, 0))
 	for {
 		history, err := a.client.GetConversationHistory(&slack.GetConversationHistoryParameters{
-			ChannelID: channelID,
+			ChannelID: channel.ID,
 			Cursor:    cursor,
 			Inclusive: false,
 			Latest:    "",
@@ -82,5 +82,8 @@ func (a *Api) GetConversationHistory(channelID string) ([]Message, error) {
 		cursor = history.ResponseMetaData.NextCursor
 	}
 
-	return messages, nil
+	return &ConversationHistory{
+		Channel:  channel,
+		Messages: messages,
+	}, nil
 }

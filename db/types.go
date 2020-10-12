@@ -25,10 +25,12 @@ type Message struct {
 	IsStarred  bool
 	ReplyCount int
 
+	Channel   Channel `gorm:"foreignKey:ChannelID"`
+	ChannelID string
+
 	User   User `gorm:"foreignKey:UserID"`
 	UserID string
 
-	// reactions
 	Reactions []MessageReaction `gorm:"foreignKey:MessageID;foreignKey:ReactionID"`
 }
 

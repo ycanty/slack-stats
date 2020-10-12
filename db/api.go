@@ -28,18 +28,19 @@ func Open(file string) (*Api, error) {
 	return api, nil
 }
 
-func (a *Api) Save(messages []slack.Message) error {
+func (a *Api) Save(ch *slack.ConversationHistory) error {
 	dbMessages := make([]Message, 0)
-	for _, msg := range messages {
-		dbMessages = append(dbMessages, convertMessage(msg))
+	for _, msg := range ch.Messages {
+		dbMessages = append(dbMessages, convertMessage(ch.Channel, msg))
 	}
 
 	tx := a.db.Save(dbMessages)
 	return tx.Error
 }
 
-func convertMessage(message slack.Message) Message {
+func convertMessage(channel slack.Channel, message slack.Message) Message {
 	msg := Message{
+		Channel:    convertChannel(channel),
 		User:       convertUsers([]string{message.User})[0],
 		Text:       message.Text,
 		Timestamp:  message.Timestamp,
@@ -48,6 +49,13 @@ func convertMessage(message slack.Message) Message {
 	}
 	msg.Reactions = convertReactions(msg, message.Reactions)
 	return msg
+}
+
+func convertChannel(channel slack.Channel) Channel {
+	return Channel{
+		ID:   channel.ID,
+		Name: channel.Name,
+	}
 }
 
 func convertUsers(userIDs []string) []User {

@@ -16,11 +16,11 @@ func newGetConversationHistoryCommand() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			channelID := viper.GetString("channel-id")
 			api := slack.NewApi(viper.GetString("token"))
-			messages, err := api.GetConversationHistory(channelID)
+			ch, err := api.GetConversationHistory(slack.Channel{ID: channelID})
 			if err != nil {
 				return err
 			}
-			_ = json.PrintJSON(messages)
+			_ = json.PrintJSON(ch)
 			return nil
 		},
 	}

@@ -21,8 +21,8 @@ func PrintJSON(obj interface{}) error {
 	return nil
 }
 
-func ReadConversationHistory(reader io.Reader) ([]slack.Message, error) {
-	var messages []slack.Message
+func ReadConversationHistory(reader io.Reader) (*slack.ConversationHistory, error) {
+	var messages *slack.ConversationHistory
 	data, err := ioutil.ReadAll(reader)
 	if err != nil {
 		return nil, err

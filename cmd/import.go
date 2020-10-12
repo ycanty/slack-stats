@@ -24,13 +24,13 @@ func newImportCommand() *cobra.Command {
 				return err
 			}
 
-			messages, err := json.ReadConversationHistory(fileHandle)
+			ch, err := json.ReadConversationHistory(fileHandle)
 
 			if err != nil {
 				return err
 			}
 
-			if err := json.PrintJSON(messages); err != nil {
+			if err := json.PrintJSON(ch); err != nil {
 				return err
 			}
 
@@ -40,7 +40,7 @@ func newImportCommand() *cobra.Command {
 				return err
 			}
 
-			err = dbClient.Save(messages)
+			err = dbClient.Save(ch)
 
 			return err
 		},

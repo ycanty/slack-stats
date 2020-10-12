@@ -22,3 +22,8 @@ type ItemReaction struct {
 	Count int      `json:"count"`
 	Users []string `json:"users"`
 }
+
+type ConversationHistory struct {
+	Channel  Channel   `json:"channel"`
+	Messages []Message `json:"messages"`
+}
