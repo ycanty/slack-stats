@@ -33,7 +33,7 @@ func newGetConversationHistoryCommand() *cobra.Command {
 	//	panic(err)
 	//}
 
-	if err := viper.BindPFlag("channel-id", command.Flags().Lookup("channel-id")); err != nil {
+	if err := viper.BindPFlag("channel-id", command.Flag("channel-id")); err != nil {
 		log.Fatal(err)
 	}
 	return command

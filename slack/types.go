@@ -27,3 +27,10 @@ type ConversationHistory struct {
 	Channel  Channel   `json:"channel"`
 	Messages []Message `json:"messages"`
 }
+
+// User contains all the information of a user
+type User struct {
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	RealName string `json:"real_name"`
+}

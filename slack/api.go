@@ -9,11 +9,13 @@ import (
 
 type Api struct {
 	client *slack.Client
+	token  string
 }
 
 func NewApi(token string) *Api {
 	return &Api{
 		client: slack.New(token),
+		token:  token,
 	}
 }
 
@@ -85,5 +87,31 @@ func (a *Api) GetConversationHistory(channel Channel) (*ConversationHistory, err
 	return &ConversationHistory{
 		Channel:  channel,
 		Messages: messages,
+	}, nil
+}
+
+func (a *Api) GetUserInfo(userId string) (*User, error) {
+	userInfo, err := a.client.GetUserInfo(userId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &User{
+		ID:       userInfo.ID,
+		Name:     userInfo.Name,
+		RealName: userInfo.RealName,
+	}, nil
+}
+
+func (a *Api) GetUserByEmail(email string) (*User, error) {
+	userInfo, err := a.client.GetUserByEmail(email)
+	if err != nil {
+		return nil, err
+	}
+
+	return &User{
+		ID:       userInfo.ID,
+		Name:     userInfo.Name,
+		RealName: userInfo.RealName,
 	}, nil
 }

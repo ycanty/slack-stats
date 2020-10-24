@@ -8,8 +8,9 @@ type Channel struct {
 
 // User is a slack user
 type User struct {
-	ID   string `gorm:"primaryKey"`
-	Name string
+	ID       string `gorm:"primaryKey"`
+	Name     string
+	RealName string
 }
 
 // Reaction is a reaction icon (thumbs up, etc)
