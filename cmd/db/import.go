@@ -6,6 +6,7 @@ import (
 	"github.com/ycanty/slack-stats/db"
 	"github.com/ycanty/slack-stats/file"
 	"github.com/ycanty/slack-stats/json"
+	"github.com/ycanty/slack-stats/slack"
 	"log"
 )
 
@@ -27,7 +28,7 @@ func newImportCommand() *cobra.Command {
 
 			dbFilename := viper.GetString(configDBSqliteFilename)
 
-			ch, err := json.ReadConversationHistory(fileHandle)
+			ch, err := slack.NewConversationHistoryFromJSON(fileHandle)
 
 			if err != nil {
 				return err
