@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"github.com/ycanty/go-cli/cmd"
+	"github.com/ycanty/slack-stats/cmd"
 	"os"
 )
 

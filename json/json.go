@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	colorjson "github.com/nwidger/jsoncolor"
-	"github.com/ycanty/go-cli/slack"
+	"github.com/ycanty/slack-stats/slack"
 	"io"
 	"io/ioutil"
 )

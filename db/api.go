@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/ycanty/go-cli/slack"
+	"github.com/ycanty/slack-stats/slack"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

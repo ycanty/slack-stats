@@ -1,4 +1,4 @@
-module github.com/ycanty/go-cli
+module github.com/ycanty/slack-stats
 
 go 1.15
 

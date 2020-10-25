@@ -3,8 +3,8 @@ package slack
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/ycanty/go-cli/json"
-	"github.com/ycanty/go-cli/slack"
+	"github.com/ycanty/slack-stats/json"
+	"github.com/ycanty/slack-stats/slack"
 )
 
 func newGetUserInfoCommand() *cobra.Command {

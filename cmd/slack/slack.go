@@ -3,7 +3,7 @@ package slack
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ycanty/go-cli/slack"
+	"github.com/ycanty/slack-stats/slack"
 	"log"
 )
 

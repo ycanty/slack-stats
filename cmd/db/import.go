@@ -2,9 +2,15 @@ package db
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/ycanty/go-cli/argparse"
-	"github.com/ycanty/go-cli/db"
-	"github.com/ycanty/go-cli/json"
+	"github.com/spf13/viper"
+	"github.com/ycanty/slack-stats/db"
+	"github.com/ycanty/slack-stats/file"
+	"github.com/ycanty/slack-stats/json"
+	"log"
+)
+
+const (
+	configDBSqliteFilename = "db.sqlite.filename"
 )
 
 func newImportCommand() *cobra.Command {

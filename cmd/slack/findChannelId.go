@@ -2,7 +2,7 @@ package slack
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/ycanty/go-cli/json"
+	"github.com/ycanty/slack-stats/json"
 )
 
 func newFindChannelIDCommand() *cobra.Command {

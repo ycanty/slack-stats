@@ -19,8 +19,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/ycanty/go-cli/cmd/db"
-	"github.com/ycanty/go-cli/cmd/slack"
+	"github.com/ycanty/slack-stats/cmd/db"
+	"github.com/ycanty/slack-stats/cmd/slack"
 	"os"
 
 	"github.com/mitchellh/go-homedir"
