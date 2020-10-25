@@ -29,30 +29,21 @@ import (
 
 var cfgFile string
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
-	Short:        "Slack CLI utilities",
-	Long:         `Interact with Slack through the command line`,
-	SilenceUsage: true,
-}
+func NewRootCmd() *cobra.Command {
+	command := &cobra.Command{
+		Short:        "Slack statistics",
+		Long:         `Generate statistics reports of slack conversation histories`,
+		SilenceUsage: true,
+	}
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() error {
-	return rootCmd.Execute()
-}
+	command.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-stats.yaml)")
 
-func init() {
+	command.AddCommand(slack.NewSlackCommand())
+	command.AddCommand(db.NewDBCommand())
+
 	cobra.OnInitialize(initConfig)
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-stats.yaml)")
-
-	rootCmd.AddCommand(slack.NewSlackCommand())
-	rootCmd.AddCommand(db.NewDBCommand())
+	return command
 }
 
 // initConfig reads in config file and ENV variables if set.
