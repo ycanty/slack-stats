@@ -26,7 +26,7 @@ func newImportCommand() *cobra.Command {
 				return err
 			}
 
-			if err := json.PrintJSON(ch); err != nil {
+			if err := json.PrintJSON(cmd.OutOrStdout(), ch); err != nil {
 				return err
 			}
 

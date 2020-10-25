@@ -35,8 +35,7 @@ func newGetUserInfoCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			_ = json.PrintJSON(user)
-			return nil
+			return json.PrintJSON(cmd.OutOrStdout(), user)
 		},
 	}
 

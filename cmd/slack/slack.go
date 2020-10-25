@@ -35,7 +35,7 @@ var cachedSlackApi *slack.Api
 
 // slackApi is to be used by subcommands to get the slack API
 func slackApi() *slack.Api {
-	if cachedSlackApi != nil {
+	if cachedSlackApi == nil {
 		cachedSlackApi = slack.NewApi(viper.GetString(configSlackToken))
 	}
 	return cachedSlackApi

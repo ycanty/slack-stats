@@ -21,6 +21,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/ycanty/slack-stats/cmd/db"
 	"github.com/ycanty/slack-stats/cmd/slack"
+	"github.com/ycanty/slack-stats/json"
 	"os"
 
 	"github.com/mitchellh/go-homedir"
@@ -28,15 +29,20 @@ import (
 )
 
 var cfgFile string
+var jsonPath string
 
 func NewRootCmd() *cobra.Command {
 	command := &cobra.Command{
 		Short:        "Slack statistics",
 		Long:         `Generate statistics reports of slack conversation histories`,
 		SilenceUsage: true,
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			json.SetJSONPath(jsonPath)
+		},
 	}
 
 	command.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-stats.yaml)")
+	command.PersistentFlags().StringVar(&jsonPath, "jsonpath", "", "Filter json output with a JSONPath expression")
 
 	command.AddCommand(slack.NewSlackCommand())
 	command.AddCommand(db.NewDBCommand())

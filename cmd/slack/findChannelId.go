@@ -16,8 +16,7 @@ func newFindChannelIDCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			_ = json.PrintJSON(channels)
-			return nil
+			return json.PrintJSON(cmd.OutOrStdout(), channels)
 		},
 	}
 

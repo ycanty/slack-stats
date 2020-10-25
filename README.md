@@ -5,7 +5,6 @@ Interact with slack from the command line.
 ## TODO
 
 * `slack get-conversation-history`: add parameter --after <msg_id>
-* Add `db get-last-message`: gets the msg_id of last imported message
 * Add `db update-info --users|--channels|--all`:
   for all users/channels in db, fetch missing info
 * Don't print a warning if config file doesn't exist;
@@ -14,5 +13,6 @@ Interact with slack from the command line.
 
 ## References
 
+* [JSONPath](https://godoc.org/k8s.io/client-go/util/jsonpath)
 * [GORM](https://gorm.io/)
 * [Slack API](https://api.slack.com)

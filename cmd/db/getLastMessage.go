@@ -23,7 +23,7 @@ func newGetLastMessageCommand() *cobra.Command {
 				return err
 			}
 
-			if err := json.PrintJSON(msg); err != nil {
+			if err := json.PrintJSON(cmd.OutOrStdout(), msg); err != nil {
 				return err
 			}
 			return nil

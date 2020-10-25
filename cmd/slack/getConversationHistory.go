@@ -23,8 +23,8 @@ func newGetConversationHistoryCommand() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			_ = json.PrintJSON(ch)
-			return nil
+
+			return json.PrintJSON(cmd.OutOrStdout(), ch)
 		},
 	}
 
