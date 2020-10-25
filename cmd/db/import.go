@@ -19,17 +19,13 @@ func newImportCommand() *cobra.Command {
 		Short: "Import data into the statistics database",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fileHandle, err := argparse.GetFileFlag(cmd, "file")
+			fileHandle, err := file.OpenFile(cmd.Flag("from").Value.String())
 
 			if err != nil {
 				return err
 			}
 
-			dbFilename, err := cmd.Flags().GetString("into")
-
-			if err != nil {
-				return err
-			}
+			dbFilename := viper.GetString(configDBSqliteFilename)
 
 			ch, err := json.ReadConversationHistory(fileHandle)
 
@@ -53,14 +49,14 @@ func newImportCommand() *cobra.Command {
 		},
 	}
 
-	command.Flags().StringP("file", "f", "", "File name or - for stdin")
-	if err := command.MarkFlagRequired("file"); err != nil {
-		panic(err) // err here means programming error on name param of MarkFlagRequired
+	command.Flags().StringP("from", "f", "", "Input File name or - for stdin")
+	if err := command.MarkFlagRequired("from"); err != nil {
+		log.Fatal(err) // err here means programming error on name param of MarkFlagRequired
 	}
 
 	command.Flags().StringP("into", "i", "", "Database file name")
-	if err := command.MarkFlagRequired("into"); err != nil {
-		panic(err) // err here means programming error on name param of MarkFlagRequired
+	if err := viper.BindPFlag(configDBSqliteFilename, command.Flags().Lookup("into")); err != nil {
+		log.Fatal(err)
 	}
 
 	return command

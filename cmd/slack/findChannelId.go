@@ -3,6 +3,7 @@ package slack
 import (
 	"github.com/spf13/cobra"
 	"github.com/ycanty/slack-stats/json"
+	"log"
 )
 
 func newFindChannelIDCommand() *cobra.Command {
@@ -22,7 +23,7 @@ func newFindChannelIDCommand() *cobra.Command {
 
 	command.Flags().StringP("name", "n", "", "Channel name")
 	if err := command.MarkFlagRequired("name"); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	return command

@@ -4,7 +4,6 @@ Interact with slack from the command line.
 
 ## TODO
 
-* Add config default for db.sqlite.filename
 * `slack get-conversation-history`: add parameter --after <msg_id>
 * Add `db get-last-message`: gets the msg_id of last imported message
 * Add `db update-info --users|--channels|--all`:
