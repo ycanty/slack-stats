@@ -2,16 +2,10 @@ package db
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"github.com/ycanty/slack-stats/db"
 	"github.com/ycanty/slack-stats/file"
 	"github.com/ycanty/slack-stats/json"
 	"github.com/ycanty/slack-stats/slack"
 	"log"
-)
-
-const (
-	configDBSqliteFilename = "db.sqlite.filename"
 )
 
 func newImportCommand() *cobra.Command {
@@ -20,13 +14,11 @@ func newImportCommand() *cobra.Command {
 		Short: "Import data into the statistics database",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fileHandle, err := file.OpenFile(cmd.Flag("from").Value.String())
+			fileHandle, err := file.OpenFile(cmd.Flag("file").Value.String())
 
 			if err != nil {
 				return err
 			}
-
-			dbFilename := viper.GetString(configDBSqliteFilename)
 
 			ch, err := slack.NewConversationHistoryFromJSON(fileHandle)
 
@@ -38,7 +30,7 @@ func newImportCommand() *cobra.Command {
 				return err
 			}
 
-			dbClient, err := db.Open(dbFilename)
+			dbClient, err := dbApi()
 
 			if err != nil {
 				return err
@@ -50,14 +42,9 @@ func newImportCommand() *cobra.Command {
 		},
 	}
 
-	command.Flags().StringP("from", "f", "", "Input File name or - for stdin")
-	if err := command.MarkFlagRequired("from"); err != nil {
+	command.Flags().StringP("file", "f", "", "Input File name or - for stdin")
+	if err := command.MarkFlagRequired("file"); err != nil {
 		log.Fatal(err) // err here means programming error on name param of MarkFlagRequired
-	}
-
-	command.Flags().StringP("into", "i", "", "Database file name")
-	if err := viper.BindPFlag(configDBSqliteFilename, command.Flags().Lookup("into")); err != nil {
-		log.Fatal(err)
 	}
 
 	return command

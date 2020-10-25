@@ -38,6 +38,14 @@ func (a *Api) Save(ch *slack.ConversationHistory) error {
 	return tx.Error
 }
 
+func (a *Api) GetLastMessage() (*Message, error) {
+	msg := &Message{}
+	if result := a.db.Last(msg); result.Error != nil {
+		return nil, result.Error
+	}
+	return msg, nil
+}
+
 func convertMessage(channel slack.Channel, message slack.Message) Message {
 	msg := Message{
 		Channel:    convertChannel(channel),
