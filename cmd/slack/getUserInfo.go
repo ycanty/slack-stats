@@ -3,7 +3,6 @@ package slack
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/ycanty/go-cli/json"
 	"github.com/ycanty/go-cli/slack"
 )
@@ -14,7 +13,6 @@ func newGetUserInfoCommand() *cobra.Command {
 		Short: "Get information about a user",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			api := slack.NewApi(viper.GetString("slack.token"))
 			id := cmd.Flag("id").Value.String()
 			email := cmd.Flag("email").Value.String()
 
@@ -29,9 +27,9 @@ func newGetUserInfoCommand() *cobra.Command {
 			var err error
 
 			if id != "" {
-				user, err = api.GetUserInfo(id)
+				user, err = slackApi().GetUserInfo(id)
 			} else if email != "" {
-				user, err = api.GetUserInfo(email)
+				user, err = slackApi().GetUserInfo(email)
 			}
 
 			if err != nil {
