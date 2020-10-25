@@ -1,7 +1,8 @@
-package cmd
+package db
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/ycanty/go-cli/argparse"
 	"github.com/ycanty/go-cli/db"
 	"github.com/ycanty/go-cli/json"
 )
@@ -12,7 +13,7 @@ func newImportCommand() *cobra.Command {
 		Short: "Import data into the statistics database",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fileHandle, err := GetFileFlag(cmd, "file")
+			fileHandle, err := argparse.GetFileFlag(cmd, "file")
 
 			if err != nil {
 				return err

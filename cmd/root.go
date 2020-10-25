@@ -19,7 +19,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"log"
+	"github.com/ycanty/go-cli/cmd/db"
+	"github.com/ycanty/go-cli/cmd/slack"
 	"os"
 
 	"github.com/mitchellh/go-homedir"
@@ -30,7 +31,6 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:          "slack",
 	Short:        "Slack CLI utilities",
 	Long:         `Interact with Slack through the command line`,
 	SilenceUsage: true,
@@ -50,16 +50,9 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-stats.yaml)")
-	rootCmd.PersistentFlags().String("token", "xyz", "Slack authentication token")
 
-	if err := viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token")); err != nil {
-		log.Fatal(err)
-	}
-
-	rootCmd.AddCommand(newFindChannelIDCommand())
-	rootCmd.AddCommand(newGetConversationHistoryCommand())
-	rootCmd.AddCommand(newImportCommand())
-	rootCmd.AddCommand(newGetUserInfoCommand())
+	rootCmd.AddCommand(slack.NewSlackCommand())
+	rootCmd.AddCommand(db.NewDBCommand())
 }
 
 // initConfig reads in config file and ENV variables if set.

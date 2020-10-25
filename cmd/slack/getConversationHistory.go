@@ -1,4 +1,4 @@
-package cmd
+package slack
 
 import (
 	"github.com/spf13/cobra"

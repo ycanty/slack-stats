@@ -1,4 +1,4 @@
-package cmd
+package argparse
 
 import (
 	"github.com/spf13/cobra"
