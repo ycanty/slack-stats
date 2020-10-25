@@ -14,8 +14,8 @@ func newGetConversationHistoryCommand() *cobra.Command {
 		Short: "Get the conversation history in a channel",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			channelID := viper.GetString("channel-id")
-			api := slack.NewApi(viper.GetString("token"))
+			channelID := viper.GetString("slack.channel-id")
+			api := slack.NewApi(viper.GetString("slack.token"))
 			ch, err := api.GetConversationHistory(slack.Channel{ID: channelID})
 			if err != nil {
 				return err
@@ -26,14 +26,8 @@ func newGetConversationHistoryCommand() *cobra.Command {
 	}
 
 	command.Flags().StringP("channel-id", "c", "", "Channel ID")
-	//err := command.MarkFlagRequired("channel-id")
 
-	//if err != nil {
-	//	// Ok to panic: MarkFlagRequired() returns an error only if we use an invalid flag name
-	//	panic(err)
-	//}
-
-	if err := viper.BindPFlag("channel-id", command.Flag("channel-id")); err != nil {
+	if err := viper.BindPFlag("slack.channel-id", command.Flag("channel-id")); err != nil {
 		log.Fatal(err)
 	}
 	return command

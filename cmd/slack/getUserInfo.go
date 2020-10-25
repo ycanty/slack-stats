@@ -14,7 +14,7 @@ func newGetUserInfoCommand() *cobra.Command {
 		Short: "Get information about a user",
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			api := slack.NewApi(viper.GetString("token"))
+			api := slack.NewApi(viper.GetString("slack.token"))
 			id := cmd.Flag("id").Value.String()
 			email := cmd.Flag("email").Value.String()
 

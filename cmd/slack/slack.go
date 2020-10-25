@@ -19,7 +19,7 @@ func NewSlackCommand() *cobra.Command {
 
 	command.PersistentFlags().String("token", "", "Slack authentication token")
 
-	if err := viper.BindPFlag("token", command.PersistentFlags().Lookup("token")); err != nil {
+	if err := viper.BindPFlag("slack.token", command.PersistentFlags().Lookup("token")); err != nil {
 		log.Fatal(err)
 	}
 
