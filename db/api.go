@@ -38,12 +38,38 @@ func (a *Api) Save(ch *slack.ConversationHistory) error {
 	return tx.Error
 }
 
+func (a *Api) SaveUser(user *User) error {
+	tx := a.db.Save(user)
+	return tx.Error
+}
+
+func (a *Api) SaveChannel(channel *Channel) error {
+	tx := a.db.Save(channel)
+	return tx.Error
+}
+
 func (a *Api) GetLastMessage() (*Message, error) {
 	msg := &Message{}
 	if result := a.db.Last(msg); result.Error != nil {
 		return nil, result.Error
 	}
 	return msg, nil
+}
+
+func (a *Api) GetUsersWithMissingNames() ([]User, error) {
+	var users []User
+	if result := a.db.Where("name = ''").Find(&users); result.Error != nil {
+		return nil, result.Error
+	}
+	return users, nil
+}
+
+func (a *Api) GetChannelsWithMissingNames() ([]Channel, error) {
+	var channels []Channel
+	if result := a.db.Where("name = ''").Find(&channels); result.Error != nil {
+		return nil, result.Error
+	}
+	return channels, nil
 }
 
 func convertMessage(channel slack.Channel, message slack.Message) Message {

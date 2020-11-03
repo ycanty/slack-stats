@@ -98,6 +98,18 @@ func (a *Api) GetUserInfo(userId string) (*User, error) {
 	}, nil
 }
 
+func (a *Api) GetChannelInfo(channelId string) (*Channel, error) {
+	channelInfo, err := a.client.GetChannelInfo(channelId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Channel{
+		ID:   channelInfo.ID,
+		Name: channelInfo.Name,
+	}, nil
+}
+
 func (a *Api) GetUserByEmail(email string) (*User, error) {
 	userInfo, err := a.client.GetUserByEmail(email)
 	if err != nil {

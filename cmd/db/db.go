@@ -18,8 +18,7 @@ func NewDBCommand() *cobra.Command {
 		Long:  ``,
 	}
 
-	command.AddCommand(newImportCommand())
-	command.AddCommand(newGetLastMessageCommand())
+	command.AddCommand(newImportCommand(), newGetLastMessageCommand(), newUpdateNamesCommand())
 
 	command.PersistentFlags().StringP("dbfile", "d", "", "Database file name")
 	if err := viper.BindPFlag(configDBSqliteFilename, command.PersistentFlags().Lookup("dbfile")); err != nil {
