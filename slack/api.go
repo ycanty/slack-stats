@@ -1,10 +1,8 @@
 package slack
 
 import (
-	"fmt"
 	"github.com/slack-go/slack"
 	"strings"
-	"time"
 )
 
 type Api struct {
@@ -39,12 +37,9 @@ func (a *Api) GetChannels(name string) ([]Channel, error) {
 	return responses, nil
 }
 
-func (a *Api) GetConversationHistory(channel Channel) (*ConversationHistory, error) {
+func (a *Api) GetConversationHistory(channel Channel, after_message string) (*ConversationHistory, error) {
 	messages := make([]Message, 0)
 	cursor := ""
-	// TODO Get the start date from a param
-	thetime := time.Now().AddDate(0, 0, -7).Unix() // since 7 days ago
-	oldest := fmt.Sprintf("%d", thetime)
 	//fmt.Fprintf(os.Stdout, "Epoch: %s\n", time.Unix(thetime, 0))
 	for {
 		history, err := a.client.GetConversationHistory(&slack.GetConversationHistoryParameters{
@@ -53,7 +48,7 @@ func (a *Api) GetConversationHistory(channel Channel) (*ConversationHistory, err
 			Inclusive: false,
 			Latest:    "",
 			Limit:     100,
-			Oldest:    oldest,
+			Oldest:    after_message,
 		})
 		if err != nil {
 			return nil, err

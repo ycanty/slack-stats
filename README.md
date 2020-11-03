@@ -1,10 +1,9 @@
-# Slack CLI
+# Slack Statistics
 
-Interact with slack from the command line.
+Generate statistics reports from Slack conversation history.
 
 ## TODO
 
-* `slack get-conversation-history`: add parameter --after <msg_id>
 * Add `db update-info --users|--channels|--all`:
   for all users/channels in db, fetch missing info
 * Don't print a warning if config file doesn't exist;
