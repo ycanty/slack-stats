@@ -21,8 +21,15 @@ func newGetConversationHistoryCommand() *cobra.Command {
 		Long:  ``,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			channelID := viper.GetString(configSlackChannelId)
-			afterMessage := cmd.Flags().Lookup("after").Value.String()
-			if afterMessage == "" {
+			afterMessage := cmd.Flags().Lookup("after-message").Value.String()
+			since_date := cmd.Flags().Lookup("since").Value.String()
+			if since_date != "" {
+				thetime, err := time.Parse("2006-01-02", since_date)
+				if err != nil {
+					return err
+				}
+				afterMessage = fmt.Sprintf("%d", thetime.Unix())
+			} else if afterMessage == "" && since_date == "" {
 				thetime := time.Now().AddDate(0, 0, -7).Unix() // since 7 days ago
 				afterMessage = fmt.Sprintf("%d", thetime)
 			}
@@ -36,10 +43,16 @@ func newGetConversationHistoryCommand() *cobra.Command {
 	}
 
 	command.Flags().StringP("channel-id", "c", "", "Channel ID")
-	command.Flags().StringP("after", "a", "", "Message ID")
+	command.Flags().StringP("after-message", "a", "", "Message ID")
+	command.Flags().StringP("since", "s", "", "Since YYYY-MM-DD")
 
 	if err := viper.BindPFlag(configSlackChannelId, command.Flag("channel-id")); err != nil {
 		log.Fatal(err)
 	}
 	return command
+}
+
+func sinceDefault(days_ago int) int64 {
+	thetime := time.Now().AddDate(0, 0, -days_ago).Unix() // since x days ago
+	return thetime
 }
