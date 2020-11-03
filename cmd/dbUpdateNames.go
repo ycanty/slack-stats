@@ -1,9 +1,8 @@
-package db
+package cmd
 
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	cmdslack "github.com/ycanty/slack-stats/cmd/slack"
 	"github.com/ycanty/slack-stats/slack"
 )
 
@@ -19,7 +18,7 @@ func newUpdateNamesCommand() *cobra.Command {
 				return err
 			}
 
-			slackApi := slack.NewApi(viper.GetString(cmdslack.ConfigSlackToken))
+			slackApi := slack.NewApi(viper.GetString(ConfigSlackToken))
 
 			users, err := dbClient.GetUsersWithMissingNames()
 

@@ -19,8 +19,6 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/ycanty/slack-stats/cmd/db"
-	"github.com/ycanty/slack-stats/cmd/slack"
 	"github.com/ycanty/slack-stats/json"
 	"os"
 
@@ -44,8 +42,8 @@ func NewRootCmd() *cobra.Command {
 	command.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.slack-stats.yaml)")
 	command.PersistentFlags().StringVar(&jsonPath, "jsonpath", "", "Filter json output with a JSONPath expression")
 
-	command.AddCommand(slack.NewSlackCommand())
-	command.AddCommand(db.NewDBCommand())
+	command.AddCommand(NewSlackCommand())
+	command.AddCommand(NewDBCommand())
 
 	cobra.OnInitialize(initConfig)
 
