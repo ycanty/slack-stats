@@ -1,5 +1,11 @@
 package db
 
+import (
+	"math"
+	"strconv"
+	"time"
+)
+
 // Channel is a slack channel
 type Channel struct {
 	ID   string `gorm:"primaryKey"`
@@ -33,6 +39,16 @@ type Message struct {
 	UserID string
 
 	Reactions []MessageReaction `gorm:"foreignKey:MessageID;foreignKey:ReactionID"`
+}
+
+func (m *Message) Time() (time.Time, error) {
+	timeFloat, err := strconv.ParseFloat(m.Timestamp, 64)
+	sec, dec := math.Modf(timeFloat)
+	if err != nil {
+		return time.Now(), err
+	}
+
+	return time.Unix(int64(sec), int64(dec*(1e9))), nil
 }
 
 // MessageReaction defines user reactions to a given message

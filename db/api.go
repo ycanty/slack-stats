@@ -48,12 +48,45 @@ func (a *Api) SaveChannel(channel *Channel) error {
 	return tx.Error
 }
 
+func (a *Api) GetFirstMessage() (*Message, error) {
+	msg := &Message{}
+	if result := a.db.First(msg); result.Error != nil {
+		return nil, result.Error
+	}
+	return msg, nil
+}
+
 func (a *Api) GetLastMessage() (*Message, error) {
 	msg := &Message{}
 	if result := a.db.Last(msg); result.Error != nil {
 		return nil, result.Error
 	}
 	return msg, nil
+}
+
+func (a *Api) GetMessageCount() (int64, error) {
+	return a.getCount(&Message{})
+}
+
+func (a *Api) GetMessageCountOnDay(day int) (int64, error) {
+	// TODO
+	var count int64
+	if result := a.db.Model(&Message{}).Count(&count); result.Error != nil {
+		return 0, result.Error
+	}
+	return count, nil
+}
+
+func (a *Api) GetUserCount() (int64, error) {
+	return a.getCount(&User{})
+}
+
+func (a *Api) getCount(object interface{}) (int64, error) {
+	var count int64
+	if result := a.db.Model(object).Count(&count); result.Error != nil {
+		return 0, result.Error
+	}
+	return count, nil
 }
 
 func (a *Api) GetUsersWithMissingNames() ([]User, error) {
