@@ -113,6 +113,7 @@ func convertMessage(channel slack.Channel, message slack.Message) Message {
 		Timestamp:  message.Timestamp,
 		IsStarred:  message.IsStarred,
 		ReplyCount: message.ReplyCount,
+		Permalink:  message.Permalink,
 	}
 	msg.Reactions = convertReactions(msg, message.Reactions)
 	return msg

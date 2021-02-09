@@ -15,6 +15,7 @@ type Message struct {
 
 	// reactions
 	Reactions []ItemReaction `json:"reactions,omitempty"`
+	Permalink string         `json:"Permalink,omitempty"`
 }
 
 type ItemReaction struct {

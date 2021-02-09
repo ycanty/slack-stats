@@ -1,7 +1,6 @@
 package json
 
 import (
-	"fmt"
 	colorjson "github.com/nwidger/jsoncolor"
 	"io"
 	"k8s.io/client-go/util/jsonpath"
@@ -16,13 +15,10 @@ func SetJSONPath(path string) {
 
 func PrintJSON(writer io.Writer, obj interface{}) error {
 	if jsonPath == "" {
-		jsonBytes, err := colorjson.MarshalIndent(obj, "", "   ")
-		if err != nil {
-			return err
-		}
-
-		_, err = fmt.Fprintln(writer, string(jsonBytes))
-		return err
+		encoder := colorjson.NewEncoder(writer)
+		encoder.SetEscapeHTML(false) // To get un-escaped URLs in the json output
+		encoder.SetIndent("", "   ")
+		return encoder.Encode(obj)
 	}
 
 	parser := jsonpath.New("filter")

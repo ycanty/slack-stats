@@ -25,7 +25,17 @@ go run main.go slack get-conversation-history -s 2020-01-01 > tmp/data.json
 go run main.go db import -f tmp/data.json
 go run main.go db update-names
 ```
+### JSONPath support
 
+JSON output can be filtered using `--jsonpath`.  The syntax is the same
+as supported by kubernetes `kubectl`.  See [JSONPath Support](https://kubernetes.io/docs/reference/kubectl/jsonpath/)
+
+For example, the following will output in markdown syntax a link to each message using the message's timestamp
+and its permalink as follows: `[timestamp](permalink)`
+
+```bash
+go run main.go slack get-conversation-history --jsonpath="{range .messages[*]}{'['}{.Timestamp}{']('}{.Permalink}{')\n'}{end}"
+```
 
 ## References
 

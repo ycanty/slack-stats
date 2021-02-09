@@ -64,7 +64,17 @@ func (a *Api) GetConversationHistory(channel Channel, after_message string) (*Co
 					Users: reaction.Users,
 				})
 			}
+			permalink, err := a.client.GetPermalink(&slack.PermalinkParameters{
+				Channel: channel.ID,
+				Ts:      msg.Timestamp,
+			})
+
+			if err != nil {
+				return nil, err
+			}
+
 			messages = append(messages, Message{
+				Permalink:  permalink,
 				User:       msg.User, // TODO query slack for real user name
 				Text:       msg.Text,
 				Timestamp:  msg.Timestamp, // TODO Convert to human-readable time

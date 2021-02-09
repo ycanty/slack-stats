@@ -28,6 +28,7 @@ type Reaction struct {
 type Message struct {
 	Timestamp string `gorm:"primaryKey"`
 
+	Permalink  string
 	Text       string
 	IsStarred  bool
 	ReplyCount int
